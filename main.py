@@ -87,6 +87,9 @@ def main(html_path: Path) -> None:
     nav_css: epub.EpubItem = epub.EpubItem(uid='style_nav', file_name='style/nav.css', media_type='text/css', content=style)
     book.add_item(nav_css)
 
+    ## define spine
+    book.spine = ['nav'] + chapters
+
     ## write to file
     output_path: Path = html_path.with_suffix('.epub')
     epub.write_epub(str(output_path), book, {})
