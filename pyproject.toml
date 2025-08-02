@@ -1,0 +1,10 @@
+[project]
+name = "epub-from-html-code"
+version = "0.1.0"
+description = "Code to convert an html file into an epub ebook"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "ebooklib~=0.19.0",
+    "beautifulsoup4~=4.13.0",
+    ]
