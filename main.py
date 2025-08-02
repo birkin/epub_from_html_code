@@ -1,5 +1,5 @@
 """
-converts an html file into an epub ebook, using headings as chapters
+Converts an html file into an epub ebook, using headings as chapters.
 """
 
 import argparse
@@ -99,21 +99,23 @@ def validate_html_file(path: Path) -> Path:
     """
     Validates that the path exists and has an .html extension.
     """
-    if not path.exists():
-        raise FileNotFoundError(f'File not found: {path}')
-    if path.suffix.lower() != '.html':
-        raise ValueError(f'File must have an .html extension, got: {path.suffix}')
-    return path
+    full_path: Path = Path(path).resolve()
+    if not full_path.exists():
+        raise FileNotFoundError(f'File not found: {full_path}')
+    if full_path.suffix.lower() != '.html':
+        raise ValueError(f'File must have an .html extension, got: {full_path.suffix}')
+    return full_path
 
 
 def parse_args() -> argparse.Namespace:
     """
-    Parse command-line arguments.
+    Parses command-line argument.
+    Called by __main__.
     """
     parser = argparse.ArgumentParser(description='Convert an HTML file to an EPUB ebook, using headings as chapters')
     parser.add_argument(
-        '--html_path',
-        type=lambda p: validate_html_file(Path(p)),
+        '--html-path',
+        type=Path,
         required=True,
         help='Path to the input HTML file (must end with .html)',
     )
@@ -123,4 +125,5 @@ def parse_args() -> argparse.Namespace:
 if __name__ == '__main__':
     args: argparse.Namespace = parse_args()
     html_path: Path = args.html_path
+    html_path: Path = validate_html_file(html_path)
     main(html_path)
